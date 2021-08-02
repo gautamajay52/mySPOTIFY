@@ -48,7 +48,7 @@ class mySpotify(Spotify):
     def my_song_title(self):
         self.__get_song_artist()
         if self.song_name and self.artist:
-            artist = ", ".join([a for a in self.artist])
+            artist = ", ".join(self.artist)
             self.title = f"{self.song_name} by {artist}"
             return self.title
 
