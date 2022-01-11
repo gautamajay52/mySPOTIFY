@@ -9,6 +9,7 @@
 * `ID`: Your ID
 * `TELEGRAPH`: wip
 * `REFRESH_TOKEN`: wip
+* `IS_PREMIUM`: `True` If your account is premium
 
 
 # ⚡ Steps: 🔥
@@ -17,7 +18,11 @@
 3) Select forked repo
 4) Fill all the details.
 5) Deploy
-6) Enjoy 👌
+6) open this link
+   ```
+   https://api.telegram.org/bot<YOUR-TOKEN>/setWebhook?url=<YOUR-VERCEL-URL>/api/webhook/
+   ```
+7) Enjoy 👌
 
 # ⚡ Credits: 🌎
 * [GautamKumar(me)](https://github.com/gautamajay52) for [Nothing](https://github.com/gautamajay52/mySPOTIFY)😬😁

@@ -55,11 +55,6 @@ def button_press(update, context):
     callback_query = update.callback_query
     callback_query.answer()
     pre = callback_query.message.text_html
-    if pre == "💭 Select Your Option 💭":
-        callback_query.delete_message()
-    else:
-        callback_query.edit_message_text(pre, parse_mode="html")
-
     data = callback_query.data
 
     spoti = mySpotify(client_id, client_secret, refresh_token)
@@ -67,11 +62,21 @@ def button_press(update, context):
     if data == "lyrics":
         title = spoti.my_song_title()
         if title:
+            if not pre in (
+                "💭 Select Your Option 💭",
+                "💭 Nothing is Playing",
+                "💭 Are you Listening your own song ?",
+            ):
+                callback_query.edit_message_text(pre, parse_mode="html")
+            else:
+                callback_query.delete_message()
             msg = callback_query.message.reply_text(
-                f"⏳ <b>Searching for: {title}</b>", parse_mode="html"
+                f"⏳ <b>Searching for: {title}</b>",
+                reply_markup=InlineKeyboardMarkup(buttons),
+                parse_mode="html",
             )
         else:
-            msg = callback_query.message.reply_text(
+            msg = callback_query.edit_message_text(
                 "💭 <b>Nothing is Playing</b>",
                 reply_markup=InlineKeyboardMarkup(buttons),
                 parse_mode="html",
@@ -80,7 +85,7 @@ def button_press(update, context):
         try:
             lyrics = spoti.parse_lyrics()
         except Exception as g_a:
-            callback_query.message.reply_text(
+            callback_query.edit_message_text(
                 g_a, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="html"
             )
             return
@@ -104,7 +109,8 @@ def button_press(update, context):
                 reply_markup=InlineKeyboardMarkup(buttons),
                 parse_mode="html",
             )
-    # not tested (all premium features)
+        return
+    # (all premium features)
     elif data == "pause":
         spoti.pause_song()
     elif data == "prev":
